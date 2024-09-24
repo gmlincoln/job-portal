@@ -1,0 +1,10 @@
+.fix-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.fix-dropdown:hover {
+    background-color: #111214;
+}

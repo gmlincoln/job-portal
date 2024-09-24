@@ -1,0 +1,62 @@
+{% extends 'common/master.html' %}
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+
+{% block body %}
+
+<!-- Job Details Section -->
+<div class="container mt-5">
+    <!-- Job Title and Company Info -->
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg border-0">
+                <div class="card-body"
+                    style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 15px;">
+                    <h2 class="card-title text-dark">Data Analyst</h2>
+                    <h5 class="card-subtitle mb-4 text-muted">Finance Company</h5>
+
+                    <!-- Job Description -->
+                    <h6 class="text-dark">Job Description</h6>
+                    <p class="card-text">
+                        We are looking for a highly skilled Data Analyst to join our team. The ideal candidate will have
+                        a passion for data analytics, experience in financial data, and proficiency in tools like SQL,
+                        Python, and Excel.
+                    </p>
+
+                    <!-- Salary Field -->
+                    <h6 class="text-dark">Salary</h6>
+                    <p class="card-text"><strong>$70,000 - $90,000 per year</strong></p>
+
+                    <!-- Job Requirements -->
+                    <h6 class="text-dark">Requirements</h6>
+                    <ul class="list-unstyled">
+                        <li>• Bachelor's degree in Computer Science, Data Science, or a related field.</li>
+                        <li>• 2+ years of experience in data analysis or a related field.</li>
+                        <li>• Proficient in SQL, Python, and data visualization tools.</li>
+                        <li>• Strong problem-solving skills and attention to detail.</li>
+                        <li>• Experience working in the finance industry is a plus.</li>
+                    </ul>
+
+                    <!-- Job Details -->
+                    <p><strong>Location:</strong> Chicago, IL</p>
+                    <p><strong>Job Type:</strong> Full-Time</p>
+
+                    <!-- Apply Button -->
+                    <a href="" class="btn btn-warning rounded-pill text-dark shadow-sm mt-3">Apply
+                        Now</a>
+
+                    <!-- Back to Listings Button -->
+                    <a href="{% url 'homePage' %}"
+                        class="btn btn-outline-secondary rounded-pill shadow-sm mt-3 ml-2">Back to Listings</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

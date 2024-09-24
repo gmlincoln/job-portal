@@ -1,0 +1,51 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <!-- Logo and Brand Name -->
+        <a class="navbar-brand fix-logo" href="{% url 'homePage' %}">
+            <img src="{% static 'img/logo.png' %}" alt="JobPortal" width="60" height="60"
+                class="d-inline-block align-text-top">
+            <span class="text-warning">JobPortal</span>
+        </a>
+        <!-- Toggle Button for Mobile View -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Centered Search Bar -->
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <form class="d-flex">
+                        <input class="form-control me-2 rounded-pill" type="search" placeholder="Search jobs..."
+                            aria-label="Search">
+                        <button class="btn btn-warning rounded-pill" type="submit">Search</button>
+                    </form>
+                </li>
+            </ul>
+
+            <!-- User Profile or Login/Signup Buttons -->
+            {% if user.is_authenticated %}
+            <div class="dropdown">
+                <button class="btn btn-outline-light dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-user-tie"></i> {{ user.get_full_name }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end bg-dark text-light" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'previewResume' %}">Profile</a>
+                    </li>
+                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'createResume' %}">Create
+                            Resume</a></li>
+                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'logoutPage' %}">Logout</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <div class="d-flex">
+                <a class="btn btn-warning rounded-pill me-2 mr-2" href="{% url 'loginPage' %}">Login</a>
+                <a class="btn btn-warning rounded-pill" href="{% url 'registerPage' %}"> Sign Up</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>

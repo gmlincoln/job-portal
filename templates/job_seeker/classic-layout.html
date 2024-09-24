@@ -1,0 +1,73 @@
+{% extends 'common/master.html' %}
+
+{% load static %}
+
+{% block body %}
+<div class="container mt-5">
+    <div id="resume">
+        <div class="text-center mb-4">
+            <img src="{% static 'img/logo-colorful.jpg' %}" alt="Profile Picture" class="img-fluid rounded-circle"
+                style="width: 150px;">
+            <h1 class="mt-3">John Doe</h1>
+            <p class="lead">Software Engineer</p>
+            <p>Email: john.doe@example.com | Phone: +1 234 567 890</p>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="border-bottom pb-2">Career Summary</h4>
+            <p>A highly motivated software engineer with over 5 years of experience in developing scalable web
+                applications and working with cross-functional teams. Proficient in multiple programming languages and
+                passionate about delivering high-quality code.</p>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="border-bottom pb-2">Education</h4>
+            <ul>
+                <li>Bachelor's in Computer Science, XYZ University (2015 - 2019)</li>
+            </ul>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="border-bottom pb-2">Experience</h4>
+            <ul>
+                <li>Software Engineer at ABC Corp (2020 - Present)</li>
+                <li>Intern at Tech Solutions (2019 - 2020)</li>
+            </ul>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="border-bottom pb-2">Skills</h4>
+            <ul>
+                <li>Python - Expert</li>
+                <li>JavaScript - Intermediate</li>
+                <li>HTML & CSS - Advanced</li>
+            </ul>
+        </div>
+
+        <div class="mb-4">
+            <h4 class="border-bottom pb-2">Languages</h4>
+            <ul>
+                <li>English (Fluent)</li>
+                <li>Spanish (Intermediate)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary mb-3" id="download-pdf">Download PDF</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('download-pdf').addEventListener('click', function () {
+        let element = document.getElementById('resume');
+        let opt = {
+            margin: 1,
+            filename: '{{user.get_full_name}}.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    });
+</script>
+{% endblock body %}
