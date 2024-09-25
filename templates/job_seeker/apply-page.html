@@ -1,0 +1,74 @@
+{% extends 'common/master.html' %}
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+
+{% block body %}
+
+
+<!-- Apply for Job Section -->
+<div class="container mt-5">
+    <!-- Job Title and Company Info -->
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg border-0">
+                <div class="card-body"
+                    style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 15px;">
+                    <h2 class="card-title text-dark">Apply for Data Analyst</h2>
+                    <h5 class="card-subtitle mb-4 text-muted">Finance Company</h5>
+
+                    <!-- Application Form -->
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" name="fullName"
+                                value="{{user.get_full_name}}" disabled required>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{user.email}}"
+                                disabled required>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
+                        </div>
+
+                        <!-- Resume Upload -->
+                        <div class="mb-3">
+                            <label for="resume" class="form-label">Upload Resume</label>
+                            <input type="file" class="form-control" id="resume" name="resume" required>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="mb-3">
+                            <label for="coverLetter" class="form-label">Cover Letter (Optional)</label>
+                            <textarea class="form-control" id="coverLetter" name="coverLetter" rows="4"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-warning rounded-pill text-dark shadow-sm mt-3">Submit
+                            Application</button>
+
+                        <!-- Back to Job Listings -->
+                        <a href="{% url 'homePage' %}"
+                            class="btn btn-outline-secondary rounded-pill shadow-sm mt-3 ml-2">Back to Listings</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock body %}

@@ -12,7 +12,7 @@ from myApp.models import *
 
 
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.decorators import login_required
 
 
 def homePage(req):
@@ -37,7 +37,7 @@ def loginPage(req):
         
         if user is not None:
             login(req, user)
-            messages.success(req,'Login Successfull!')
+            messages.success(req,'Login Successful!')
             return redirect('homePage')
         else:
             messages.warning(req,'Username or Password Wrong!')
@@ -106,21 +106,32 @@ def jobDetails(req):
     
     return render(req, 'common/job-details.html')
 
+@login_required
 def createResume(req):
     return render(req, 'job_seeker/create-resume.html')
 
+@login_required
 def previewResume(req):
 
     return render(req, 'job_seeker/preview-resume.html')
 
+@login_required
 def appliedJobs(req):
 
     return render(req, 'job_seeker/applied-jobs.html')
 
+@login_required
 def classicLayout(req):
 
     return render(req, 'job_seeker/classic-layout.html')
 
+@login_required
 def modernLayout(req):
 
     return render(req, 'job_seeker/modern-layout.html')
+
+
+@login_required
+def applyPage(req):
+
+    return render(req, 'job_seeker/apply-page.html')

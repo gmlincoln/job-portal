@@ -25,7 +25,7 @@ from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('homePage/', homePage, name='homePage'),
+    path('', homePage, name='homePage'),
     path('loginPage/', loginPage, name='loginPage'),
     path('registerPage/', registerPage, name='registerPage'),
     path('jobDetails/', jobDetails, name='jobDetails'),
@@ -35,5 +35,6 @@ urlpatterns = [
     path('appliedJobs/', appliedJobs, name='appliedJobs'),
     path('classicLayout/', classicLayout, name='classicLayout'),
     path('modernLayout/', modernLayout, name='modernLayout'),
+    path('applyPage/', applyPage, name='applyPage'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

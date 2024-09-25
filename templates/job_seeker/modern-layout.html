@@ -10,7 +10,7 @@
 {% block body %}
 <!-- Resume Header -->
 <div id="resume">
-    <div class="bg-dark text-white text-center py-5 mt-4">
+    <div class="bg-dark text-white text-center py-5 mt-4 resume-header">
         <img src="{% static 'img/logo-colorful.jpg' %}" alt="Profile Picture" class="rounded-circle img-thumbnail"
             width="150">
         <h1 class="mt-3">John Doe</h1>
@@ -93,7 +93,8 @@
 </div>
 <!-- Download Button -->
 <div class="text-center mt-5">
-    <button class="btn btn-primary btn-lg mb-3" id="download-pdf">Download as PDF</button>
+    <button class="btn btn-primary btn-lg mb-3 no-print" id="download-pdf" onclick="printPage()">Download as
+        PDF</button>
 </div>
 
 
@@ -110,5 +111,7 @@
         };
         html2pdf().set(opt).from(element).save();
     });
+
+
 </script>
 {% endblock body %}

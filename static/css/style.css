@@ -8,3 +8,15 @@
 .fix-dropdown:hover {
     background-color: #111214;
 }
+
+
+@media print {
+
+    .resume-header {
+        background-color: #343a40;
+    }
+
+    .no-print {
+        display: none;
+    }
+}

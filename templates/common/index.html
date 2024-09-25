@@ -10,9 +10,7 @@
 {% block body %}
 <!-- Job Listings Section -->
 <div class="container mt-5">
-    {% if user.is_authenticated %}
-    {% include 'includes/messages.html' %}
-    {% endif %}
+
 
     <!-- Job Listings Heading -->
     <h2 class="text-center text-dark mb-4">Job Listings</h2>
@@ -52,6 +50,8 @@
 
     </div>
 </div>
+
+
 
 
 {% endblock body %}

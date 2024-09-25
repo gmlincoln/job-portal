@@ -24,6 +24,14 @@
     <!-- PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
+    <!-- Sweet Alert -->
+    <script src="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js
+    ">
+    </script>
+    <link href="
+    https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css
+    " rel="stylesheet">
 
 </head>
 
@@ -36,6 +44,18 @@
     {% block body %}
 
     {% endblock body %}
+
+
+    <script>
+        {% for message in messages %}
+        Swal.fire({
+            icon: "{{ message.tags }}",
+            title: "{{ message }}",
+            timer: 2000
+        });
+        {% endfor %}
+    </script>
+
 
     <!-- Bootstrap JS (with Popper.js included) -->
 
