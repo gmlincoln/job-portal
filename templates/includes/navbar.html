@@ -33,11 +33,17 @@
                     <i class="fa-solid fa-user-tie"></i> {{ user.get_full_name }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end bg-dark text-light" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'previewResume' %}">Profile</a>
+                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'previewResume' %}"><i
+                                class="fa-solid fa-user"></i> Profile</a>
                     </li>
-                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'createResume' %}">Create
-                            Resume</a></li>
-                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'logoutPage' %}">Logout</a></li>
+                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'createResume' %}"><i
+                                class="fa-regular fa-address-book"></i> Add Basic
+                            Info</a></li>
+                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'settingsPage' %}"><i
+                                class="fa-solid fa-gear"></i>
+                            Settings</a></li>
+                    <li><a class="dropdown-item text-light fix-dropdown" href="{% url 'logoutPage' %}"><i
+                                class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                 </ul>
             </div>
             {% else %}

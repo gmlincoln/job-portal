@@ -29,13 +29,18 @@ def loginPage(req):
         user_name = req.POST.get('username')
         password = req.POST.get('password')
         
-        if not user_name or not password:
+        user = authenticate(req, username = user_name, password = password)        
+
+
+        if not Custom_User.objects.filter(username = user_name).exists() and password:
+            messages.warning(req, "Sorry! This user doesn't exist!")
+
+        elif not user_name or not password:
             messages.warning(req, 'Both username and password required!')
             return render(req, 'common/login.html')
         
-        user = authenticate(req, username = user_name, password = password)
         
-        if user is not None:
+        elif user is not None:
             login(req, user)
             messages.success(req,'Login Successful!')
             return redirect('homePage')
@@ -74,7 +79,8 @@ def registerPage(req):
         if password != confirm_password:
             messages.warning(req, 'Password not matched!')
             return render(req, 'common/register.html')
-        
+
+
         if len(password) < 8:
             messages.warning(req, "Password at least 8 characters.")
             return render(req, 'common/register.html')
@@ -140,3 +146,8 @@ def creativeLayout(req):
 def applyPage(req):
 
     return render(req, 'job_seeker/apply-page.html')
+
+@login_required
+def settingsPage(req):
+
+    return render(req, 'common/settings.html')
