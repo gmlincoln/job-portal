@@ -1,0 +1,64 @@
+{% extends 'common/master.html' %}
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Add Basic Information</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4">
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="first_name" value="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="last_name" value="Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="john@example.com"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="designation">Designation</label>
+                        <input type="text" class="form-control" id="designation" name="designation"
+                            value="Software Engineer" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePicture">Profile Picture</label>
+                        <div class="mb-3">
+                            <img src="path_to_profile_picture.jpg" alt="Profile Picture" class="img-thumbnail"
+                                width="150">
+                        </div>
+                        <input type="file" class="form-control-file" id="profilePicture" name="profile_picture">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" value="+1 234 567 890" required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="careerSummary">Career Summary</label>
+                        <textarea class="form-control" id="careerSummary" name="career_summary" rows="3"
+                            required>Highly motivated and results-driven software engineer with over 5 years of experience in developing scalable web applications.</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

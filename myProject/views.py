@@ -6,13 +6,21 @@ from django.contrib import messages
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
 
+
+
 from django.db import IntegrityError
 
 from myApp.models import *
 
 
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+
+
+
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import update_session_auth_hash
 
 
 def homePage(req):
@@ -52,7 +60,7 @@ def loginPage(req):
 def logoutPage(req):
     logout(req)
     messages.success(req, 'Successfully logout!')
-    return redirect('loginPage')
+    return redirect('homePage')
 
 
 def registerPage(req):
@@ -151,3 +159,47 @@ def applyPage(req):
 def settingsPage(req):
 
     return render(req, 'common/settings.html')
+
+
+
+@login_required
+def changePassword(req):
+    
+    current_user = req.user
+    
+    if req.method == 'POST':
+        old_password = req.POST.get('oldPassword')
+        new_password = req.POST.get('newPassword')
+        repeat_password = req.POST.get('repeatNewPassword')
+        
+        if check_password(old_password, current_user.password):
+            
+            if len(new_password) >=8 and len(repeat_password) >= 8:
+                
+                if new_password == repeat_password:
+                
+                    current_user.set_password(new_password)
+                    current_user.save()
+                    
+                    #To prevent logout
+                    update_session_auth_hash(req, current_user)
+                    
+                    messages.success(req, 'Password check successfully!')
+                    
+                    return redirect('previewResume')
+                
+                else:
+                    messages.warning(req, 'New password and repeat password is not match!')
+            else:
+                messages.warning(req,'Password at least 8 characters!')
+    
+        else:
+            messages.warning(req, 'Old password is incorrect!')
+        
+        
+        
+    return render(req, 'common/settings.html')
+
+
+
+#https://github.com/rajeshdiu/Job-Portal-Class-Practice/blob/main/myProject/myProject/views.py
