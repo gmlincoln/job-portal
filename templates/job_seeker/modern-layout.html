@@ -93,7 +93,7 @@
 </div>
 <!-- Download Button -->
 <div class="text-center mt-5">
-    <button class="btn btn-primary btn-lg mb-3 no-print" id="download-pdf" onclick="printPage()">Download as
+    <button class="btn btn-primary btn-lg mb-3 no-print" id="download-pdf">Download as
         PDF</button>
 </div>
 
@@ -103,7 +103,7 @@
     document.getElementById('download-pdf').addEventListener('click', function () {
         let element = document.getElementById('resume');
         let opt = {
-            margin: 1,
+            margin: 0.2,
             filename: '{{user.get_full_name}}.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },

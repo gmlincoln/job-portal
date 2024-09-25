@@ -35,6 +35,7 @@ urlpatterns = [
     path('appliedJobs/', appliedJobs, name='appliedJobs'),
     path('classicLayout/', classicLayout, name='classicLayout'),
     path('modernLayout/', modernLayout, name='modernLayout'),
+    path('creativeLayout/', creativeLayout, name='creativeLayout'),
     path('applyPage/', applyPage, name='applyPage'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

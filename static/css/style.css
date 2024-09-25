@@ -9,6 +9,54 @@
     background-color: #111214;
 }
 
+.profile-header {
+    background: linear-gradient(135deg, #6f42c1, #6610f2);
+    color: white;
+    padding: 3rem;
+    text-align: center;
+}
+
+.profile-header img {
+    border: 8px solid white;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #6f42c1;
+}
+
+.section-content {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.progress-bar {
+    background-color: #6f42c1;
+}
+
+.skill-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+.contact-info i {
+    color: #6f42c1;
+    margin-right: 8px;
+}
+
+
+
+
+
 
 @media print {
 

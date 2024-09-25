@@ -130,6 +130,11 @@ def modernLayout(req):
 
     return render(req, 'job_seeker/modern-layout.html')
 
+@login_required
+def creativeLayout(req):
+
+    return render(req, 'job_seeker/creative-layout.html')
+
 
 @login_required
 def applyPage(req):
