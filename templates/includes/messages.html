@@ -2,25 +2,16 @@
 
 {% for message in messages %}
 
-{% if message.tags == 'warning' %}
-<div class="alert alert-warning" role="alert">
-    {{message}}
-</div>
-{% endif %}
-
-{% if message.tags == 'success' %}
-
-<div class="alert alert-success" role="alert">
-    {{message}}
-</div>
-
-{% endif %}
-
-
 {% if message.tags == 'error' %}
 <div class="alert alert-danger" role="alert">
     {{messages}}
 </div>
+{% else %}
+
+<div class="alert alert-{{message.tags}}" role="alert">
+    {{message}}
+</div>
+
 {% endif %}
 
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 from django.contrib import messages
 
@@ -103,6 +103,7 @@ def registerPage(req):
                 last_name = last_name, 
                 username = username,
                 email = email,
+                user_type = user_type,
                 password = confirm_password
             )
             messages.success(req, 'Account create successfully! You can login your account now.')
@@ -122,12 +123,56 @@ def jobDetails(req):
 
 @login_required
 def createResume(req):
+    if req.user.user_type == 'seeker':
+        
+        if req.method == 'POST':
+
+            current_user = req.user
+            
+            resume_instance, created = Resume_Model.objects.get_or_create(user=current_user)
+            
+            resume_instance.designation = req.POST.get('designation')
+            resume_instance.date_of_birth = req.POST.get('dob')
+            resume_instance.profile_pic = req.FILES.get('profile_picture')
+            resume_instance.contact_number = req.POST.get('phone')
+            resume_instance.address = req.POST.get('address')
+            resume_instance.career_summary = req.POST.get('career_summary')
+
+            resume_instance.save()
+
+            current_user.firstname = req.POST.get('first_name')
+            current_user.lastname = req.POST.get('last_name')
+            current_user.email = req.POST.get('email')
+
+            current_user.save()
+
+            return redirect('settingsPage')
+
+    else:
+        messages.warning(req,'You are not authorized to access this page!')
+        return redirect('createResume')
+
     return render(req, 'job_seeker/create-resume.html')
 
 @login_required
 def previewResume(req):
 
-    return render(req, 'job_seeker/preview-resume.html')
+    current_user = req.user
+
+    try:
+        user_basic_info = get_object_or_404(Resume_Model,user=current_user) 
+    
+    except Http404:
+        messages.warning(req, "Sorry! You haven't created your resume yet")
+        return redirect('createResume')
+
+    
+
+    context = {
+        'basic_info':user_basic_info,
+    }
+    
+    return render(req, 'job_seeker/preview-resume.html',context)
 
 @login_required
 def appliedJobs(req):
@@ -203,3 +248,5 @@ def changePassword(req):
 
 
 #https://github.com/rajeshdiu/Job-Portal-Class-Practice/blob/main/myProject/myProject/views.py
+
+#bangladesh1212
