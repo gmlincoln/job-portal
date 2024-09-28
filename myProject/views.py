@@ -237,6 +237,13 @@ def previewResume(req):
     return render(req, 'job_seeker/preview-resume.html',context)
 
 @login_required
+def addEducation(req):
+
+
+    return render(req, 'job_seeker/add-education.html')
+
+
+@login_required
 def appliedJobs(req):
 
     return render(req, 'job_seeker/applied-jobs.html')

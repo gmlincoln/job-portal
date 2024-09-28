@@ -34,6 +34,7 @@ urlpatterns = [
     path('updateBasicInfo/', updateBasicInfo, name='updateBasicInfo'),
     path('previewResume/', previewResume, name='previewResume'),
     path('settingsPage/', settingsPage, name='settingsPage'),
+    path('addEducation/', addEducation, name='addEducation'),
     path('appliedJobs/', appliedJobs, name='appliedJobs'),
     path('classicLayout/', classicLayout, name='classicLayout'),
     path('modernLayout/', modernLayout, name='modernLayout'),

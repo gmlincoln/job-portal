@@ -55,9 +55,9 @@
                         Education
 
                         {% if education %}
-                        <a href="/editEducation" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <a href="/addEducation" class="btn btn-outline-primary btn-sm">Edit</a>
                         {% else %}
-                        <a href="/editEducation" class="btn btn-outline-primary btn-sm">Add</a>
+                        <a href="{% url 'addEducation' %}" class="btn btn-outline-primary btn-sm">Add</a>
                         {% endif %}
 
 

@@ -34,4 +34,53 @@ class Resume_Model(models.Model):
     def __str__(self):
         return f"{self.user.username}--{self.designation}--{self.contact_number}"
     
+class DegreeType_Model(models.Model):
 
+    DEGREE_TYPE = [
+        ('ssc','SSC'),
+        ('hsc','HSC'),
+        ('diploma','Diploma'),
+        ('bachelor',"Bachelor's Degree"),
+        ('master',"Master's Degree"),
+        ('phd',"Doctorate (PhD)"),
+    ]
+
+    name = models.CharField(max_length=100, null=True)
+    description = models.TextField(max_length=200, blank=True)
+    degree_level = models.CharField(choices=DEGREE_TYPE, max_length=100, null=True)
+
+    def __str__(self):
+        return self.name
+
+class Institute_Model(models.Model):
+
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=400, blank=True)
+    city = models.CharField(max_length=80, blank=True)
+    division = models.CharField(max_length=80, blank=True)
+    postal_code = models.CharField(max_length=20, blank=True)
+    country = models.CharField(max_length=100, blank=True)
+    website = models.URLField(blank=True)
+    email = models.EmailField(max_length=200, null=True)
+    established_year = models.PositiveIntegerField(blank=True, null=True)
+    contact_number = models.CharField(max_length=20, blank=True)
+
+    def __str__(self):
+
+        return f"{self.name}--{self.country}--{self.website}--{self.contact_number}"
+
+
+class Education_Model(models.Model):
+
+    user = models.ForeignKey(Custom_User, null=True, on_delete=models.CASCADE)
+    institute_name = models.CharField(max_length=200, null=True)
+    degree_name = models.CharField(max_length=100, null=True)
+    field_of_study = models.CharField(max_length=200, null=True)
+    start_date = models.CharField(max_length=30, null=True)
+    end_date = models.CharField(max_length=30, null=True)
+
+    class Meta:
+        unique_together = ('user','institute_name','degree_name')
+
+    def __str__(self):
+        return f"{self.user.username}--{self.institute_name}--{self.start_date}-{self.end_date}"
