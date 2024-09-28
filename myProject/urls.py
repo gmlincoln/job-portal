@@ -31,6 +31,7 @@ urlpatterns = [
     path('jobDetails/', jobDetails, name='jobDetails'),
     path('logoutPage/', logoutPage, name='logoutPage'),
     path('createResume/', createResume, name='createResume'),
+    path('updateBasicInfo/', updateBasicInfo, name='updateBasicInfo'),
     path('previewResume/', previewResume, name='previewResume'),
     path('settingsPage/', settingsPage, name='settingsPage'),
     path('appliedJobs/', appliedJobs, name='appliedJobs'),

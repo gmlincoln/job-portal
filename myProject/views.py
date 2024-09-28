@@ -123,17 +123,25 @@ def jobDetails(req):
 
 @login_required
 def createResume(req):
+    
+    current_user = req.user
+
     if req.user.user_type == 'seeker':
         
         if req.method == 'POST':
 
-            current_user = req.user
-            
             resume_instance, created = Resume_Model.objects.get_or_create(user=current_user)
+            
             
             resume_instance.designation = req.POST.get('designation')
             resume_instance.date_of_birth = req.POST.get('dob')
-            resume_instance.profile_pic = req.FILES.get('profile_picture')
+            
+
+            if resume_instance.profile_pic:
+                resume_instance.profile_pic = resume_instance.profile_pic
+            else:
+                resume_instance.profile_pic = req.FILES.get('profile_picture')
+
             resume_instance.contact_number = req.POST.get('phone')
             resume_instance.address = req.POST.get('address')
             resume_instance.career_summary = req.POST.get('career_summary')
@@ -146,13 +154,67 @@ def createResume(req):
 
             current_user.save()
 
-            return redirect('settingsPage')
+            messages.success(req,'Basic info updated successfully!')
+
+            return redirect('previewResume')
 
     else:
         messages.warning(req,'You are not authorized to access this page!')
         return redirect('createResume')
 
+
     return render(req, 'job_seeker/create-resume.html')
+
+
+@login_required
+def updateBasicInfo(req):
+    
+    current_user = req.user
+
+    if req.user.user_type == 'seeker':
+        
+        if req.method == 'POST':
+
+            resume_instance, created = Resume_Model.objects.get_or_create(user=current_user)
+            
+            
+            resume_instance.designation = req.POST.get('designation')
+            resume_instance.date_of_birth = req.POST.get('dob')
+            
+
+            if resume_instance.profile_pic:
+                resume_instance.profile_pic = resume_instance.profile_pic
+            else:
+                resume_instance.profile_pic = req.FILES.get('profile_picture')
+
+            resume_instance.contact_number = req.POST.get('phone')
+            resume_instance.address = req.POST.get('address')
+            resume_instance.career_summary = req.POST.get('career_summary')
+
+            resume_instance.save()
+
+            current_user.firstname = req.POST.get('first_name')
+            current_user.lastname = req.POST.get('last_name')
+            current_user.email = req.POST.get('email')
+
+            current_user.save()
+
+            messages.success(req,'Basic info updated successfully!')
+
+            return redirect('previewResume')
+
+    else:
+        messages.warning(req,'You are not authorized to access this page!')
+        return redirect('createResume')
+
+    basic_info = Resume_Model.objects.get(user=current_user)
+    
+    context = {
+        'basic_info':basic_info
+    }
+
+    return render(req, 'job_seeker/create-resume.html', context)
+
 
 @login_required
 def previewResume(req):
@@ -166,8 +228,8 @@ def previewResume(req):
         messages.warning(req, "Sorry! You haven't created your resume yet")
         return redirect('createResume')
 
-    
 
+    
     context = {
         'basic_info':user_basic_info,
     }
@@ -229,7 +291,7 @@ def changePassword(req):
                     #To prevent logout
                     update_session_auth_hash(req, current_user)
                     
-                    messages.success(req, 'Password check successfully!')
+                    messages.success(req, 'Password successfully changed!')
                     
                     return redirect('previewResume')
                 
