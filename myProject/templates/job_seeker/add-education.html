@@ -1,0 +1,110 @@
+{% extends 'common/master.html' %}
+
+
+
+{% block body %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Education Qualification</h2>
+
+    <form method="POST" action="/submit-application">
+        <!-- Degree Type -->
+        <div class="form-group">
+            <label for="degree">Degree Type</label>
+            <select class="form-control" id="degree" name="degree" required onchange="toggleInputFields()">
+                <option value="" disabled selected>Select your degree</option>
+                <option value="high_school">High School Diploma</option>
+                <option value="bachelor">Bachelor's Degree</option>
+                <option value="master">Master's Degree</option>
+                <option value="phd">Doctorate (PhD)</option>
+            </select>
+        </div>
+
+        <!-- Institution Name (Dynamic input type) -->
+        <div class="form-group">
+            <label for="institution">Institution Name</label>
+            <input type="text" class="form-control" id="institution_text" name="institution_text"
+                placeholder="Enter institution name" required>
+            <select class="form-control" id="institution_select" name="institution_select" style="display: none;">
+                <option value="" disabled selected>Select institution</option>
+                <option value="harvard">Harvard University</option>
+                <option value="stanford">Stanford University</option>
+                <option value="mit">Massachusetts Institute of Technology</option>
+                <option value="cambridge">University of Cambridge</option>
+            </select>
+        </div>
+
+        <!-- Field of Study (Dynamic input type) -->
+        <div class="form-group">
+            <label for="field_of_study">Field of Study</label>
+            <input type="text" class="form-control" id="field_of_study_text" name="field_of_study_text"
+                placeholder="Enter your field of study" required>
+            <select class="form-control" id="field_of_study_select" name="field_of_study_select" style="display: none;">
+                <option value="" disabled selected>Select field of study</option>
+                <option value="cs">Computer Science</option>
+                <option value="business">Business Administration</option>
+                <option value="engineering">Engineering</option>
+                <option value="medicine">Medicine</option>
+            </select>
+        </div>
+
+        <!-- Start Date -->
+        <div class="form-group">
+            <label for="start_date">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date" required>
+        </div>
+
+        <!-- End Date -->
+        <div class="form-group">
+            <label for="end_date">End Date (or expected)</label>
+            <input type="date" class="form-control" id="end_date" name="end_date" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mb-4">Submit Application</button>
+    </form>
+</div>
+
+<!-- JavaScript to toggle input fields -->
+<script>
+    function toggleInputFields() {
+        var degree = document.getElementById('degree').value;
+
+        // Institution inputs
+        var institutionText = document.getElementById('institution_text');
+        var institutionSelect = document.getElementById('institution_select');
+
+        // Field of Study inputs
+        var fieldOfStudyText = document.getElementById('field_of_study_text');
+        var fieldOfStudySelect = document.getElementById('field_of_study_select');
+
+        if (degree === 'bachelor' || degree === 'master') {
+            // Show dropdowns and hide text inputs for both fields
+            institutionText.style.display = 'none';
+            institutionText.required = false;
+
+            institutionSelect.style.display = 'block';
+            institutionSelect.required = true;
+
+            fieldOfStudyText.style.display = 'none';
+            fieldOfStudyText.required = false;
+
+            fieldOfStudySelect.style.display = 'block';
+            fieldOfStudySelect.required = true;
+        } else {
+            // Show text inputs and hide dropdowns for both fields
+            institutionSelect.style.display = 'none';
+            institutionSelect.required = false;
+
+            institutionText.style.display = 'block';
+            institutionText.required = true;
+
+            fieldOfStudySelect.style.display = 'none';
+            fieldOfStudySelect.required = false;
+
+            fieldOfStudyText.style.display = 'block';
+            fieldOfStudyText.required = true;
+        }
+    }
+</script>
+{% endblock body %}

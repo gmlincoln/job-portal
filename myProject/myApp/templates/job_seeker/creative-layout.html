@@ -1,0 +1,115 @@
+{% extends 'common/master.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>Creative Resume-{{user.get_full_name}}</title>
+{% endblock title %}
+
+
+{% block body %}
+<section id="resume">
+    <!-- Profile Section -->
+    <section class="profile-header">
+        <div class="container">
+            <img src="{% static 'img/logo-colorful.jpg' %}" alt="Profile Picture" class="img-thumbnail mb-3">
+            <h1>John Doe</h1>
+            <p>Creative Web Developer</p>
+        </div>
+    </section>
+
+    <!-- Resume Content Section -->
+    <section class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Contact Information -->
+                <div class="section-title">Contact Information</div>
+                <div class="section-content">
+                    <p><i class="fas fa-envelope"></i> john.doe@example.com</p>
+                    <p><i class="fas fa-phone"></i> +1 234 567 890</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Main Street, Springfield, USA</p>
+                    <p><i class="fab fa-linkedin"></i> linkedin.com/in/johndoe</p>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="section-title">Skills</div>
+                <div class="section-content">
+                    <div class="skill-title">HTML & CSS</div>
+                    <div class="progress mb-2">
+                        <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90"
+                            aria-valuemin="0" aria-valuemax="100">90%</div>
+                    </div>
+
+                    <div class="skill-title">JavaScript</div>
+                    <div class="progress mb-2">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75"
+                            aria-valuemin="0" aria-valuemax="100">75%</div>
+                    </div>
+
+                    <div class="skill-title">React</div>
+                    <div class="progress mb-2">
+                        <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85"
+                            aria-valuemin="0" aria-valuemax="100">85%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <!-- Career Summary -->
+                <div class="section-title">Career Summary</div>
+                <div class="section-content">
+                    <p>A highly creative web developer with over 7 years of experience in designing, developing, and
+                        maintaining user-friendly websites. Adept in working with frontend and backend technologies.
+                        Passionate about coding, learning new tools, and enhancing web experiences.</p>
+                </div>
+
+                <!-- Experience Section -->
+                <div class="section-title">Work Experience</div>
+                <div class="section-content">
+                    <h5>Senior Web Developer - Tech Solutions</h5>
+                    <p class="text-muted">2019 - Present</p>
+                    <p>Led the front-end development team in building responsive web applications. Collaborated with the
+                        UX team to create user-centric designs. Implemented new technologies to improve overall
+                        performance.</p>
+
+                    <h5>Frontend Developer - Web Creative Studio</h5>
+                    <p class="text-muted">2015 - 2019</p>
+                    <p>Developed highly interactive and visually appealing websites. Optimized web pages for SEO and
+                        implemented best practices for performance.</p>
+                </div>
+
+                <!-- Education Section -->
+                <div class="section-title">Education</div>
+                <div class="section-content">
+                    <h5>Bachelor of Science in Computer Science</h5>
+                    <p class="text-muted">XYZ University, 2011 - 2015</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<!-- Download Resume Button -->
+<div class="text-center mt-4">
+    <button id="download-pdf" class="btn btn-primary no-print mb-4">Download as
+        PDF</button>
+</div>
+
+
+
+<script>
+    document.getElementById('download-pdf').addEventListener('click', function () {
+        let element = document.getElementById('resume');
+        let opt = {
+            margin: 0.2,
+            filename: '{{user.get_full_name}}.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    });
+
+
+</script>
+
+{% endblock body %}

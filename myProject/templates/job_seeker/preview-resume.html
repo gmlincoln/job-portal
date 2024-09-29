@@ -1,0 +1,205 @@
+{% extends 'common/master.html' %}
+
+{% load static %}
+
+{% block title %}
+<title>{{user.get_full_name}} Profile</title>
+{% endblock title %}
+
+
+{% block body %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">{{ user.get_full_name }}'s Resume</h2>
+    <div class="card shadow-lg p-4">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="/{{basic_info.profile_pic}}" class="img-thumbnail" alt="Profile Picture" width="150">
+                <h3 class="mt-3">{{ user.get_full_name }}</h3>
+                <p class="text-muted">{{basic_info.designation}}</p>
+                <a href="{% url 'updateBasicInfo' %}" class="btn btn-outline-primary btn-sm mt-3">Update Basic Info</a>
+
+                <!-- Applied Jobs Section -->
+                <div class="mb-4 mt-5">
+                    <h4 class="mt-3">Applied Jobs</h4>
+                    <a href="{% url 'appliedJobs' %}" class="btn btn-primary btn-sm">View My Applications</a>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <!-- Career Summary Section -->
+                <div class="mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center">
+                        Career Summary
+
+                    </h4>
+                    <p>
+                        {{basic_info.career_summary}}
+                    </p>
+                </div>
+
+                <!-- Contact Information Section -->
+                <div class="mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center">
+                        Contact Information
+
+                    </h4>
+                    <p><strong>Email:</strong> {{user.email}}</p>
+                    <p><strong>Phone:</strong> {{basic_info.contact_number}}</p>
+                    <p><strong>Address:</strong> {{basic_info.address}}</p>
+                </div>
+
+                <!-- Education Section -->
+                <div class="mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center">
+                        Education
+
+                        {% if education %}
+                        <a href="/addEducation" class="btn btn-outline-primary btn-sm">Edit</a>
+                        {% else %}
+                        <a href="{% url 'addEducation' %}" class="btn btn-outline-primary btn-sm">Add</a>
+                        {% endif %}
+
+
+                    </h4>
+
+                    <ul>
+                        <li>Bachelor's in Computer Science from XYZ University (2015 - 2019)</li>
+                    </ul>
+
+
+                </div>
+
+                <!-- Experience Section -->
+                <div class="mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center">
+                        Experience
+                        <a href="/editExperience" class="btn btn-outline-primary btn-sm">Edit</a>
+                    </h4>
+                    <ul>
+                        <li>Software Engineer at ABC Corp (2020 - Present)</li>
+                        <li>Intern at Tech Solutions (2019 - 2020)</li>
+                    </ul>
+                </div>
+
+                <!-- Language Section -->
+                <div class="mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center">
+                        Languages
+                        <a href="/editLanguages" class="btn btn-outline-primary btn-sm">Edit</a>
+                    </h4>
+                    <ul>
+                        <li>English (Fluent)</li>
+                        <li>Spanish (Intermediate)</li>
+                    </ul>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center">
+                        Skills
+                        <a href="/editSkills" class="btn btn-outline-primary btn-sm">Edit</a>
+                    </h4>
+                    <ul>
+                        <li>Python - Expert</li>
+                        <li>JavaScript - Intermediate</li>
+                        <li>HTML & CSS - Advanced</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Different Resume -->
+
+<div class="container m-5">
+    <h2 class="text-center mb-4">Choose Resume Layout</h2>
+    <div class="row">
+        <!-- Model 1 -->
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Classic Layout</h5>
+                    <img src="{% static 'img/classic-layout.jpg' %}" alt="Classic Layout" class="img-fluid mb-3">
+                    <a href="{% url 'classicLayout' %}" class="btn btn-warning btn-block">Use Classic
+                        Layout</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model 2 -->
+        <!-- Card with Modal Trigger -->
+        <div class="col-md-4 position-relative">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <!-- Multi-colored Pro/Premium Text -->
+                    <div class="position-absolute pro-badge" style="top: -10px; right: -10px; padding: 5px 10px; font-weight: bold;
+                background: linear-gradient(to right, #ff8c00, #f00, #00f); color: white; border-radius: 5px;">
+                        Premium
+                    </div>
+
+                    <h5 class="card-title text-center">Modern Layout</h5>
+                    <img src="{% static 'img/mordern-layout.jpg' %}" alt="Modern Layout" class="img-fluid mb-3">
+                    <button type="button" class="btn btn-warning btn-block" data-toggle="modal"
+                        data-target="#modernLayoutModal">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modernLayoutModal" tabindex="-1" role="dialog"
+            aria-labelledby="resumePurchaseModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resumePurchaseModalLabel">Purchase Your Professional Resume</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Enhance your job applications with a professionally crafted resume. Our resume service
+                            includes:</p>
+                        <ul>
+                            <li>Custom resume design tailored to your industry</li>
+                            <li>Keyword optimization to get noticed by employers</li>
+                            <li>Personalized consultation with our experts</li>
+                        </ul>
+                        <p>Price: <strong>BDT 49.99/Month</strong></p>
+                        <p>Invest in your future and increase your chances of landing your dream job!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="{% url 'modernLayout' %}" class="btn btn-primary">Purchase Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Model 3 -->
+        <div class="col-md-4">
+            <div class="card shadow-lg">
+                <div class="card-body">
+
+                    <!-- Multi-colored Pro/Premium Text -->
+                    <div class="position-absolute pro-badge" style="top: -10px; right: -10px; padding: 5px 10px; font-weight: bold;
+                 background: linear-gradient(to right, #ff8c00, #f00, #00f); color: white; border-radius: 5px;">
+                        Premium
+                    </div>
+
+                    <h5 class="card-title text-center">Creative Layout</h5>
+                    <img src="{% static 'img/creative-layout.jpg' %}" alt="Creative Layout" class="img-fluid mb-3">
+                    <a href="{% url 'creativeLayout' %}" class="btn btn-warning btn-block">Use Creative
+                        Layout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock body %}

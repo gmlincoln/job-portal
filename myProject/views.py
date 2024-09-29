@@ -148,8 +148,8 @@ def createResume(req):
 
             resume_instance.save()
 
-            current_user.firstname = req.POST.get('first_name')
-            current_user.lastname = req.POST.get('last_name')
+            current_user.first_name = req.POST.get('firstName')
+            current_user.last_name = req.POST.get('lastName')
             current_user.email = req.POST.get('email')
 
             current_user.save()
@@ -182,10 +182,12 @@ def updateBasicInfo(req):
             resume_instance.date_of_birth = req.POST.get('dob')
             
 
-            if resume_instance.profile_pic:
-                resume_instance.profile_pic = resume_instance.profile_pic
-            else:
+            if req.FILES.get('profile_picture'):
                 resume_instance.profile_pic = req.FILES.get('profile_picture')
+                
+            else:
+                resume_instance.profile_pic = resume_instance.profile_pic
+
 
             resume_instance.contact_number = req.POST.get('phone')
             resume_instance.address = req.POST.get('address')
@@ -193,8 +195,8 @@ def updateBasicInfo(req):
 
             resume_instance.save()
 
-            current_user.firstname = req.POST.get('first_name')
-            current_user.lastname = req.POST.get('last_name')
+            current_user.first_name = req.POST.get('firstName')
+            current_user.last_name = req.POST.get('lastName')
             current_user.email = req.POST.get('email')
 
             current_user.save()
@@ -239,8 +241,15 @@ def previewResume(req):
 @login_required
 def addEducation(req):
 
+    degree_info = DegreeType_Model.objects.all()
+    institute_info = Institute_Model.objects.all()
 
-    return render(req, 'job_seeker/add-education.html')
+    context = {
+        'degree_info':degree_info,
+        'institute_info':institute_info,
+    }
+
+    return render(req, 'job_seeker/add-education.html', context)
 
 
 @login_required
@@ -286,29 +295,40 @@ def changePassword(req):
         new_password = req.POST.get('newPassword')
         repeat_password = req.POST.get('repeatNewPassword')
         
-        if check_password(old_password, current_user.password):
+        if all([old_password, new_password, repeat_password]):
             
-            if len(new_password) >=8 and len(repeat_password) >= 8:
-                
-                if new_password == repeat_password:
-                
-                    current_user.set_password(new_password)
-                    current_user.save()
+            if check_password(old_password, current_user.password):
+            
+                if len(new_password) >=8 and len(repeat_password) >= 8:
                     
-                    #To prevent logout
-                    update_session_auth_hash(req, current_user)
+                    if new_password == repeat_password:
                     
-                    messages.success(req, 'Password successfully changed!')
+                        current_user.set_password(new_password)
+                        current_user.save()
+                        
+                        #To prevent logout
+                        update_session_auth_hash(req, current_user)
+                        
+                        messages.success(req, 'Password successfully changed!')
+                        
+                        return redirect('homePage')
                     
-                    return redirect('previewResume')
-                
+                    else:
+                        messages.warning(req, 'New password and repeat password is not match!')
+                        return render(req, 'common/settings.html')
+                        
                 else:
-                    messages.warning(req, 'New password and repeat password is not match!')
-            else:
-                messages.warning(req,'Password at least 8 characters!')
+                    messages.warning(req,'Password at least 8 characters!')
+                    return render(req, 'common/settings.html')
+                    
     
+            else:
+                messages.warning(req, 'Old password is incorrect!')
+                return render(req, 'common/settings.html')
+                
         else:
-            messages.warning(req, 'Old password is incorrect!')
+            messages.warning(req, 'All password fields are required!')
+            return render(req, 'common/settings.html')
         
         
         

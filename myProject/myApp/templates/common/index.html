@@ -1,0 +1,57 @@
+{% extends 'common/master.html' %}
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+
+{% block body %}
+<!-- Job Listings Section -->
+<div class="container mt-5">
+
+
+    <!-- Job Listings Heading -->
+    <h2 class="text-center text-dark mb-4">Job Listings</h2>
+
+    <!-- Filtering Options -->
+    <div class="d-flex justify-content-end mb-4">
+        <label for="filter" class="text-light me-2">Filter by:</label>
+        <select id="filter" class="form-select form-select-sm text-dark border-dark" style="width: auto;">
+            <option value="">All</option>
+            <option value="full-time">Full-Time</option>
+            <option value="part-time">Part-Time</option>
+            <option value="internship">Internship</option>
+            <option value="freelance">Remote</option>
+        </select>
+    </div>
+
+    <div class="row">
+
+
+        <!-- Job Card -->
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-lg border-0"
+                style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 20px; overflow: hidden;">
+                <div class="card-body">
+                    <h5 class="card-title text-dark">Data Analyst</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Finance Company</h6>
+                    <p class="card-text">Location: Chicago, IL</p>
+                    <p class="card-text">Full Time Position</p>
+                    <p class="card-text"><strong>Salary:</strong> $70,000 - $90,000 per year</p>
+                    <a href="{% url 'jobDetails' %}" class="btn btn-warning btn-sm rounded-pill text-dark shadow-sm">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+{% endblock body %}

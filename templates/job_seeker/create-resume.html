@@ -1,4 +1,4 @@
-{% extends 'common/master.html' %}
+{% extends 'common/base.html' %}
 
 
 {% block title %}
@@ -23,13 +23,13 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="first_name"
+                        <input type="text" class="form-control" id="firstName" name="firstName"
                             value="{{user.first_name}}" required>
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="last_name"
-                            value="{{user.last_name}}" required>
+                        <input type="text" class="form-control" id="lastName" name="lastName" value="{{user.last_name}}"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>

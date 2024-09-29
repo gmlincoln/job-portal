@@ -1,0 +1,38 @@
+{% extends 'common/master.html' %}
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">My Applications</h2>
+    <div class="card shadow-lg p-4">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Application Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Data Analyst</td>
+                    <td>Finance Company</td>
+                    <td>2024-09-10</td>
+                    <td>Interview Scheduled</td>
+                    <td><a href="{% url 'jobDetails' %}" class="btn btn-outline-info btn-sm">View Details</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock body %}

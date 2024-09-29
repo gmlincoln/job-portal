@@ -1,4 +1,4 @@
-{% extends 'common/master.html' %}
+{% extends 'common/base.html' %}
 
 
 {% block title %}
@@ -24,25 +24,11 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Software Engineer</td>
-                    <td>Tech Company</td>
-                    <td>2024-09-15</td>
-                    <td>Pending</td>
-                    <td><a href="#" class="btn btn-outline-info btn-sm">View Details</a></td>
-                </tr>
-                <tr>
                     <td>Data Analyst</td>
                     <td>Finance Company</td>
                     <td>2024-09-10</td>
                     <td>Interview Scheduled</td>
-                    <td><a href="#" class="btn btn-outline-info btn-sm">View Details</a></td>
-                </tr>
-                <tr>
-                    <td>Marketing Manager</td>
-                    <td>Marketing Agency</td>
-                    <td>2024-09-05</td>
-                    <td>Rejected</td>
-                    <td><a href="#" class="btn btn-outline-info btn-sm">View Details</a></td>
+                    <td><a href="{% url 'jobDetails' %}" class="btn btn-outline-info btn-sm">View Details</a></td>
                 </tr>
             </tbody>
         </table>

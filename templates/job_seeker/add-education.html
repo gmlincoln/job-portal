@@ -1,4 +1,4 @@
-{% extends 'common/master.html' %}
+{% extends 'common/base.html' %}
 
 
 
@@ -13,10 +13,11 @@
             <label for="degree">Degree Type</label>
             <select class="form-control" id="degree" name="degree" required onchange="toggleInputFields()">
                 <option value="" disabled selected>Select your degree</option>
-                <option value="high_school">High School Diploma</option>
-                <option value="bachelor">Bachelor's Degree</option>
-                <option value="master">Master's Degree</option>
-                <option value="phd">Doctorate (PhD)</option>
+
+                {% for d in degree_info %}
+                <option value="{{d.degree_level}}">{{d.name}}</option>
+                {% endfor %}
+
             </select>
         </div>
 
@@ -27,10 +28,11 @@
                 placeholder="Enter institution name" required>
             <select class="form-control" id="institution_select" name="institution_select" style="display: none;">
                 <option value="" disabled selected>Select institution</option>
-                <option value="harvard">Harvard University</option>
-                <option value="stanford">Stanford University</option>
-                <option value="mit">Massachusetts Institute of Technology</option>
-                <option value="cambridge">University of Cambridge</option>
+
+                {% for i in institute_info %}
+                <option value="{{i.id}}">{{i.name}}</option>
+                {% endfor %}
+
             </select>
         </div>
 
@@ -78,7 +80,7 @@
         var fieldOfStudyText = document.getElementById('field_of_study_text');
         var fieldOfStudySelect = document.getElementById('field_of_study_select');
 
-        if (degree === 'bachelor' || degree === 'master') {
+        if (degree === 'bachelor' || degree === 'master' || degree === 'phd') {
             // Show dropdowns and hide text inputs for both fields
             institutionText.style.display = 'none';
             institutionText.required = false;

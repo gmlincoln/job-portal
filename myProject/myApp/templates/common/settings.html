@@ -1,0 +1,141 @@
+{% extends 'common/master.html' %}
+
+
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Job Seeker Settings</h2>
+
+    <!-- Progress Bar for Steps -->
+    <div class="progress mb-4">
+        <div class="progress-bar" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0"
+            aria-valuemax="100">Profile</div>
+    </div>
+    <div class="row step mb-5">
+        <div class="col text-center">1. Profile</div>
+        <div class="col text-center">2. Preferences</div>
+        <div class="col text-center">3. Account</div>
+    </div>
+
+    <!-- Profile Settings Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Profile Settings</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstName" value="{{user.first_name}}" >
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" value="{{user.last_name}}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" value="{{user.email}}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone" value="+1 234 567 890">
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-outline-primary rounded-pill mt-3">
+                    <i class="fas fa-save me-2"></i> Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Preferences Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Notification Preferences</h5>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="jobAlerts" checked>
+                <label class="form-check-label" for="jobAlerts">
+                    <i class="fas fa-envelope me-2"></i>Job Alerts
+                </label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="companyUpdates">
+                <label class="form-check-label" for="companyUpdates">
+                    <i class="fas fa-building me-2"></i>Company Updates
+                </label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="newsletter">
+                <label class="form-check-label" for="newsletter">
+                    <i class="fas fa-newspaper me-2"></i>Monthly Newsletter
+                </label>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-outline-success rounded-pill mt-3">
+                    <i class="fas fa-bell me-2"></i> Update Preferences
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Settings Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Privacy Settings</h5>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="profileVisibility" checked>
+                <label class="form-check-label" for="profileVisibility">
+                    <i class="fas fa-user-shield me-2"></i>Make My Profile Visible to Employers
+                </label>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="emailVisibility">
+                <label class="form-check-label" for="emailVisibility">
+                    <i class="fas fa-eye-slash me-2"></i>Hide My Email Address
+                </label>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-outline-info rounded-pill mt-3">
+                    <i class="fas fa-user-lock me-2"></i> Update Privacy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Management Card -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Account Management</h5>
+            <form action="{% url 'changePassword' %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="oldPassword" class="form-label">Old Password</label>
+                    <input type="password" class="form-control" id="oldPassword" name="oldPassword">
+                </div>
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword">
+                </div>
+                <div class="mb-3">
+                    <label for="repeatNewPassword" class="form-label">Repeat New Password</label>
+                    <input type="password" class="form-control" id="repeatNewPassword" name="repeatNewPassword">
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-outline-danger rounded-pill mt-3">
+                        <i class="fas fa-key me-2"></i> Update Password
+                    </button>
+                    <button class="btn btn-outline-dark rounded-pill mt-3">
+                        <i class="fas fa-user-slash me-2"></i> Deactivate Account
+                    </button>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation between sections -->
+    <div class="btn-section text-center mb-4">
+        <button class="btn btn-primary rounded-pill">Previous</button>
+        <button class="btn btn-success  rounded-pill">Next</button>
+    </div>
+
+</div>
+{% endblock body %}
