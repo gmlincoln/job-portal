@@ -18,7 +18,7 @@ class Resume_Model_Display(admin.ModelAdmin):
     list_filter = ('designation',)
 
 @admin.register(DegreeType_Model)
-class DegreeType_Model(admin.ModelAdmin):
+class DegreeType_Model_Display(admin.ModelAdmin):
     list_display = ('name','degree_level','description')
 
 
@@ -28,6 +28,12 @@ class Institute_Model_Display(admin.ModelAdmin):
     list_display = ('name','country','established_year','email','contact_number')
     search_fields = ('name','country')
     list_filter = ('country','established_year','division')
+
+@admin.register(Field_of_Study_Model)
+class Field_of_Study_Model_Display(admin.ModelAdmin):
+    list_display = ('id', 'field_of_study')
+
+
 
 @admin.register(Education_Model)
 class Education_Model_Display(admin.ModelAdmin):

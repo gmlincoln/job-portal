@@ -230,10 +230,13 @@ def previewResume(req):
         messages.warning(req, "Sorry! You haven't created your resume yet")
         return redirect('createResume')
 
+  
+    education_info = Education_Model.objects.filter(user=current_user)
+ 
 
-    
     context = {
         'basic_info':user_basic_info,
+        'education_info': education_info
     }
     
     return render(req, 'job_seeker/preview-resume.html',context)
@@ -241,12 +244,59 @@ def previewResume(req):
 @login_required
 def addEducation(req):
 
+
     degree_info = DegreeType_Model.objects.all()
     institute_info = Institute_Model.objects.all()
+    field_of_study = Field_of_Study_Model.objects.all()
+
+    if req.user.user_type == 'seeker':
+        if req.method == 'POST':
+            degree_id = req.POST.get('degree_type')
+            institute_text = req.POST.get('institution_text')
+            institute_select_id = req.POST.get('institution_select')
+            field_of_study_text = req.POST.get('field_of_study_text') 
+            field_of_study_select_id = req.POST.get('field_of_study_select') 
+            start_date  = req.POST.get('start_date')
+            end_date = req.POST.get('end_date')
+
+            if all([degree_id, institute_select_id or institute_text , field_of_study_text or field_of_study_select_id, start_date, end_date]):
+
+
+                education_instance = Education_Model.objects.create(user=req.user)
+                
+                degree_type_obj = DegreeType_Model.objects.get(id=degree_id)
+                education_instance.degree_name = degree_type_obj.degree_level
+
+
+                if institute_text:
+                    education_instance.institute_name = institute_text
+                elif institute_select_id:
+                    institute_select_obj = Institute_Model.objects.get(id=institute_select_id)
+                    education_instance.institute_name = institute_select_obj.name
+
+                if field_of_study_text:
+                    education_instance.field_of_study = field_of_study_text
+                
+                elif field_of_study_select_id:
+                    field_of_study_select_obj = Field_of_Study_Model.objects.get(id=field_of_study_select_id)
+                    education_instance.field_of_study = field_of_study_select_obj.field_of_study
+
+                education_instance.start_date = start_date
+                education_instance.end_date = end_date
+
+                education_instance.save()
+
+                messages.success(req, 'Education level added!')
+                return redirect('previewResume')
+
+            else:
+                messages.warning(req,'All fields are required!')
+                return redirect('addEducation')
 
     context = {
         'degree_info':degree_info,
         'institute_info':institute_info,
+        'study_field': field_of_study,
     }
 
     return render(req, 'job_seeker/add-education.html', context)
@@ -335,6 +385,12 @@ def changePassword(req):
     return render(req, 'common/settings.html')
 
 
+
+@login_required
+
+def dashboardPage(req):
+
+    return render(req,'job_creator/index.html')
 
 #https://github.com/rajeshdiu/Job-Portal-Class-Practice/blob/main/myProject/myProject/views.py
 

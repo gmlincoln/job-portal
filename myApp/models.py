@@ -37,7 +37,7 @@ class Resume_Model(models.Model):
 class DegreeType_Model(models.Model):
 
     DEGREE_TYPE = [
-        ('ssc','SSC'),
+        ('ssc','SSC/Dakhil/Equivalent'),
         ('hsc','HSC'),
         ('diploma','Diploma'),
         ('bachelor',"Bachelor's Degree"),
@@ -69,6 +69,14 @@ class Institute_Model(models.Model):
 
         return f"{self.name}--{self.country}--{self.website}--{self.contact_number}"
 
+class Field_of_Study_Model(models.Model):
+
+    field_of_study = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return f"{self.field_of_study}"
+
+
 
 class Education_Model(models.Model):
 
@@ -76,8 +84,8 @@ class Education_Model(models.Model):
     institute_name = models.CharField(max_length=200, null=True)
     degree_name = models.CharField(max_length=100, null=True)
     field_of_study = models.CharField(max_length=200, null=True)
-    start_date = models.CharField(max_length=30, null=True)
-    end_date = models.CharField(max_length=30, null=True)
+    start_date = models.DateField(max_length=30, null=True)
+    end_date = models.DateField(max_length=30, null=True)
 
     class Meta:
         unique_together = ('user','institute_name','degree_name')

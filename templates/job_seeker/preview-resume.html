@@ -54,8 +54,11 @@
                     <h4 class="d-flex justify-content-between align-items-center">
                         Education
 
-                        {% if education %}
-                        <a href="/addEducation" class="btn btn-outline-primary btn-sm">Edit</a>
+                        {% if education_info %}
+                        <div>
+                            <a href="" class="btn btn-outline-primary btn-sm">Edit</a>
+                            <a href="{% url 'addEducation' %}" class="btn btn-outline-primary btn-sm">Add</a>
+                        </div>
                         {% else %}
                         <a href="{% url 'addEducation' %}" class="btn btn-outline-primary btn-sm">Add</a>
                         {% endif %}
@@ -64,7 +67,17 @@
                     </h4>
 
                     <ul>
-                        <li>Bachelor's in Computer Science from XYZ University (2015 - 2019)</li>
+                        {% if education_info %}
+                        {% for e in education_info %}
+                        <li>{{e.degree_name.upper}} in {{e.field_of_study}} from
+                            {{e.institute_name}}({{e.start_date|date:"Y"}}-{{e.end_date|date:"Y"}})</li>
+                        {% endfor %}
+                        {% else %}
+                        <div class="alert alert-dark">
+                            No educational institute added yet!
+                        </div>
+                        {% endif %}
+
                     </ul>
 
 

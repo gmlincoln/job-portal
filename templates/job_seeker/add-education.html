@@ -7,15 +7,16 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4">Education Qualification</h2>
 
-    <form method="POST" action="/submit-application">
+    <form method="POST">
+        {% csrf_token %}
         <!-- Degree Type -->
         <div class="form-group">
             <label for="degree">Degree Type</label>
-            <select class="form-control" id="degree" name="degree" required onchange="toggleInputFields()">
+            <select class="form-control" id="degree" name="degree_type" required onchange="toggleInputFields()">
                 <option value="" disabled selected>Select your degree</option>
 
                 {% for d in degree_info %}
-                <option value="{{d.degree_level}}">{{d.name}}</option>
+                <option value="{{d.id}}">{{d.name}}</option>
                 {% endfor %}
 
             </select>
@@ -27,7 +28,7 @@
             <input type="text" class="form-control" id="institution_text" name="institution_text"
                 placeholder="Enter institution name" required>
             <select class="form-control" id="institution_select" name="institution_select" style="display: none;">
-                <option value="" disabled selected>Select institution</option>
+                <option value="" disabled selected aria-readonly="true">Select institution</option>
 
                 {% for i in institute_info %}
                 <option value="{{i.id}}">{{i.name}}</option>
@@ -43,10 +44,12 @@
                 placeholder="Enter your field of study" required>
             <select class="form-control" id="field_of_study_select" name="field_of_study_select" style="display: none;">
                 <option value="" disabled selected>Select field of study</option>
-                <option value="cs">Computer Science</option>
-                <option value="business">Business Administration</option>
-                <option value="engineering">Engineering</option>
-                <option value="medicine">Medicine</option>
+
+                {% for s in study_field %}
+                <option value="{{s.id}}">{{s.field_of_study}}</option>
+                {% endfor %}
+
+
             </select>
         </div>
 
@@ -70,7 +73,8 @@
 <!-- JavaScript to toggle input fields -->
 <script>
     function toggleInputFields() {
-        var degree = document.getElementById('degree').value;
+        var degreeSelect = document.getElementById('degree');
+        var selectedOptionText = degreeSelect.options[degreeSelect.selectedIndex].text;
 
         // Institution inputs
         var institutionText = document.getElementById('institution_text');
@@ -80,7 +84,7 @@
         var fieldOfStudyText = document.getElementById('field_of_study_text');
         var fieldOfStudySelect = document.getElementById('field_of_study_select');
 
-        if (degree === 'bachelor' || degree === 'master' || degree === 'phd') {
+        if (selectedOptionText === 'BSc' || selectedOptionText === 'Diploma' || selectedOptionText === 'MSc' || selectedOptionText === 'Doctorate(PhD)') {
             // Show dropdowns and hide text inputs for both fields
             institutionText.style.display = 'none';
             institutionText.required = false;

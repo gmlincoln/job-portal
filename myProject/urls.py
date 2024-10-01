@@ -41,5 +41,6 @@ urlpatterns = [
     path('creativeLayout/', creativeLayout, name='creativeLayout'),
     path('applyPage/', applyPage, name='applyPage'),
     path('changePassword/', changePassword, name='changePassword'),
+    path('dashboardPage/', dashboardPage, name='dashboardPage'),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
