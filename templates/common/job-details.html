@@ -47,8 +47,17 @@
                     <p><strong>Job Type:</strong> Full-Time</p>
 
                     <!-- Apply Button -->
+
+                    {% if user.is_authenticated %}
                     <a href="{% url 'applyPage' %}" class="btn btn-warning rounded-pill text-dark shadow-sm mt-3">Apply
                         Now</a>
+                    {% else %}
+                    <div class="alert alert-warning">
+                        <p>You have to login for apply!</p>
+                    </div>
+                    {% endif %}
+
+
 
                     <!-- Back to Listings Button -->
                     <a href="{% url 'homePage' %}"

@@ -56,7 +56,7 @@
 
                         {% if education_info %}
                         <div>
-                            <a href="" class="btn btn-outline-primary btn-sm">Edit</a>
+                            <a href="{% url 'updateEducation' %}" class="btn btn-outline-primary btn-sm">Edit</a>
                             <a href="{% url 'addEducation' %}" class="btn btn-outline-primary btn-sm">Add</a>
                         </div>
                         {% else %}
@@ -69,8 +69,15 @@
                     <ul>
                         {% if education_info %}
                         {% for e in education_info %}
-                        <li>{{e.degree_name.upper}} in {{e.field_of_study}} from
-                            {{e.institute_name}}({{e.start_date|date:"Y"}}-{{e.end_date|date:"Y"}})</li>
+                        <li>
+
+                            {% if e.degree_name == 'ssc' or e.degree_name == 'hsc' %}
+                            {{e.degree_name.upper}}
+                            {% else %}
+                            {{e.degree_name | capfirst}}
+                            {% endif %}
+                            in {{e.field_of_study}}
+                            from {{e.institute_name}}({{e.start_date|date:"Y"}}-{{e.end_date|date:"Y"}})</li>
                         {% endfor %}
                         {% else %}
                         <div class="alert alert-dark">

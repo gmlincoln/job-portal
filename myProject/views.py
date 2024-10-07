@@ -126,42 +126,47 @@ def createResume(req):
     
     current_user = req.user
 
-    if req.user.user_type == 'seeker':
-        
-        if req.method == 'POST':
+    resume = Resume_Model.objects.get(user=current_user)
 
-            resume_instance, created = Resume_Model.objects.get_or_create(user=current_user)
-            
-            
-            resume_instance.designation = req.POST.get('designation')
-            resume_instance.date_of_birth = req.POST.get('dob')
-            
-
-            if resume_instance.profile_pic:
-                resume_instance.profile_pic = resume_instance.profile_pic
-            else:
-                resume_instance.profile_pic = req.FILES.get('profile_picture')
-
-            resume_instance.contact_number = req.POST.get('phone')
-            resume_instance.address = req.POST.get('address')
-            resume_instance.career_summary = req.POST.get('career_summary')
-
-            resume_instance.save()
-
-            current_user.first_name = req.POST.get('firstName')
-            current_user.last_name = req.POST.get('lastName')
-            current_user.email = req.POST.get('email')
-
-            current_user.save()
-
-            messages.success(req,'Basic info updated successfully!')
-
-            return redirect('previewResume')
-
+    if resume:
+        messages.warning(req, 'Resume already exists!')
+        return redirect('updateBasicInfo')
     else:
-        messages.warning(req,'You are not authorized to access this page!')
-        return redirect('createResume')
+        if req.user.user_type == 'seeker':
+        
+            if req.method == 'POST':
 
+                resume_instance, created = Resume_Model.objects.get_or_create(user=current_user)
+                
+                
+                resume_instance.designation = req.POST.get('designation')
+                resume_instance.date_of_birth = req.POST.get('dob')
+                
+
+                if resume_instance.profile_pic:
+                    resume_instance.profile_pic = resume_instance.profile_pic
+                else:
+                    resume_instance.profile_pic = req.FILES.get('profile_picture')
+
+                resume_instance.contact_number = req.POST.get('phone')
+                resume_instance.address = req.POST.get('address')
+                resume_instance.career_summary = req.POST.get('career_summary')
+
+                resume_instance.save()
+
+                current_user.first_name = req.POST.get('firstName')
+                current_user.last_name = req.POST.get('lastName')
+                current_user.email = req.POST.get('email')
+
+                current_user.save()
+
+                messages.success(req,'Basic info updated successfully!')
+
+                return redirect('previewResume')
+
+        else:
+            messages.warning(req,'You are not authorized to access this page!')
+            return redirect('createResume')
 
     return render(req, 'job_seeker/create-resume.html')
 
@@ -244,54 +249,62 @@ def previewResume(req):
 @login_required
 def addEducation(req):
 
-
     degree_info = DegreeType_Model.objects.all()
     institute_info = Institute_Model.objects.all()
     field_of_study = Field_of_Study_Model.objects.all()
 
     if req.user.user_type == 'seeker':
-        if req.method == 'POST':
-            degree_id = req.POST.get('degree_type')
-            institute_text = req.POST.get('institution_text')
-            institute_select_id = req.POST.get('institution_select')
-            field_of_study_text = req.POST.get('field_of_study_text') 
-            field_of_study_select_id = req.POST.get('field_of_study_select') 
-            start_date  = req.POST.get('start_date')
-            end_date = req.POST.get('end_date')
-
-            if all([degree_id, institute_select_id or institute_text , field_of_study_text or field_of_study_select_id, start_date, end_date]):
-
-
-                education_instance = Education_Model.objects.create(user=req.user)
+        try:
+            if req.method == 'POST':
+                degree_id = req.POST.get('degree_type')
+                institute_text = req.POST.get('institution_text')
+                institute_select_id = req.POST.get('institution_select')
+                field_of_study_text = req.POST.get('field_of_study_text') 
+                field_of_study_select_id = req.POST.get('field_of_study_select') 
+                start_date  = req.POST.get('start_date')
+                end_date = req.POST.get('end_date')
                 
-                degree_type_obj = DegreeType_Model.objects.get(id=degree_id)
-                education_instance.degree_name = degree_type_obj.degree_level
-
-
-                if institute_text:
-                    education_instance.institute_name = institute_text
-                elif institute_select_id:
-                    institute_select_obj = Institute_Model.objects.get(id=institute_select_id)
-                    education_instance.institute_name = institute_select_obj.name
-
-                if field_of_study_text:
-                    education_instance.field_of_study = field_of_study_text
                 
-                elif field_of_study_select_id:
-                    field_of_study_select_obj = Field_of_Study_Model.objects.get(id=field_of_study_select_id)
-                    education_instance.field_of_study = field_of_study_select_obj.field_of_study
+                if all([degree_id, institute_select_id or institute_text , field_of_study_text or field_of_study_select_id, start_date, end_date]):
 
-                education_instance.start_date = start_date
-                education_instance.end_date = end_date
 
-                education_instance.save()
+                    education_instance = Education_Model.objects.create(user=req.user)
+                    
+                    degree_type_obj = DegreeType_Model.objects.get(id=degree_id)
+                    education_instance.degree_name = degree_type_obj.degree_level
 
-                messages.success(req, 'Education level added!')
-                return redirect('previewResume')
 
-            else:
-                messages.warning(req,'All fields are required!')
-                return redirect('addEducation')
+                    if institute_text:
+                        education_instance.institute_name = institute_text
+
+                    elif institute_select_id:
+                        institute_select_obj = Institute_Model.objects.get(id=institute_select_id)
+                        education_instance.institute_name = institute_select_obj.name
+
+                    if field_of_study_text:
+                        education_instance.field_of_study = field_of_study_text
+                    
+                    elif field_of_study_select_id:
+                        field_of_study_select_obj = Field_of_Study_Model.objects.get(id=field_of_study_select_id)
+                        education_instance.field_of_study = field_of_study_select_obj.field_of_study
+
+                    education_instance.start_date = start_date
+                    education_instance.end_date = end_date
+
+                    education_instance.save()
+
+                    messages.success(req, 'Education level added!')
+                    return redirect('previewResume')
+            
+
+                else:
+                    messages.warning(req,'All fields are required!')
+                    return redirect('addEducation')
+        except IntegrityError:
+            messages.warning(req, 'Education level is already exists!')
+            return redirect('addEducation')
+            
+            
 
     context = {
         'degree_info':degree_info,
@@ -301,6 +314,11 @@ def addEducation(req):
 
     return render(req, 'job_seeker/add-education.html', context)
 
+@login_required
+def updateEducation(req):
+
+
+    return render(req, 'job_seeker/update-education.html')
 
 @login_required
 def appliedJobs(req):
@@ -326,12 +344,31 @@ def creativeLayout(req):
 @login_required
 def applyPage(req):
 
-    return render(req, 'job_seeker/apply-page.html')
+    current_user = req.user
+
+    if current_user.user_type == 'seeker':
+        return render(req, 'job_seeker/apply-page.html')
+    
+    elif current_user.user_type == 'recruiter':
+        messages.warning(req,"You are not a job seeker!")
+        return redirect("jobDetails")
+    
+    
+    
+
 
 @login_required
 def settingsPage(req):
 
-    return render(req, 'common/settings.html')
+    current_user = req.user
+
+    user_info = get_object_or_404(Resume_Model, user = current_user)
+
+    context = {
+        'user_info' : user_info
+    } 
+
+    return render(req, 'common/settings.html', context)
 
 
 
@@ -386,8 +423,9 @@ def changePassword(req):
 
 
 
-@login_required
 
+
+@login_required
 def dashboardPage(req):
 
     return render(req,'job_creator/index.html')
