@@ -1,19 +1,15 @@
 {% extends 'common/base.html' %}
 
-
 {% block title %}
-
+<title>My Applications</title>
 {% endblock title %}
-
-
-
 
 {% block body %}
 <div class="container mt-5">
     <h2 class="text-center mb-4">My Applications</h2>
     <div class="card shadow-lg p-4">
-        <table class="table">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="bg-dark text-white">
                 <tr>
                     <th>Job Title</th>
                     <th>Company</th>
@@ -27,8 +23,37 @@
                     <td>Data Analyst</td>
                     <td>Finance Company</td>
                     <td>2024-09-10</td>
-                    <td>Interview Scheduled</td>
-                    <td><a href="{% url 'jobDetails' %}" class="btn btn-outline-info btn-sm">View Details</a></td>
+                    <td>
+                        <span class="badge badge-success">Interview Scheduled</span>
+                    </td>
+                    <td>
+                        <a href="{% url 'viewApplicationDetails' %}" class="btn btn-outline-info btn-sm">View
+                            Details</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Software Developer</td>
+                    <td>Tech Corp</td>
+                    <td>2024-08-15</td>
+                    <td>
+                        <span class="badge badge-danger">Rejected</span>
+                    </td>
+                    <td>
+                        <a href="{% url 'viewApplicationDetails' %}" class="btn btn-outline-info btn-sm">View
+                            Details</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Marketing Specialist</td>
+                    <td>Global Media</td>
+                    <td>2024-07-20</td>
+                    <td>
+                        <span class="badge badge-warning">Pending</span>
+                    </td>
+                    <td>
+                        <a href="{% url 'viewApplicationDetails' %}" class="btn btn-outline-info btn-sm">View
+                            Details</a>
+                    </td>
                 </tr>
             </tbody>
         </table>

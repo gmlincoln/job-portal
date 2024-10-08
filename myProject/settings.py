@@ -63,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+            
             ],
         },
     },
@@ -127,7 +128,34 @@ LOGIN_URL = 'homePage'
 
 AUTH_USER_MODEL = 'myApp.Custom_User'
 
+
+
+
+
+#RESET Password
+
+# Email settings for Gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'gmaula.edu@gmail.com'  # Your Gmail address
+EMAIL_HOST_PASSWORD = 'nczznmmgywuvbwzk'  # Use the generated app password here
+DEFAULT_FROM_EMAIL = 'gmaula.edu@gmail.com'  # Your Gmail address
+
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',  # You can adjust this to match Bootstrap classes
+}

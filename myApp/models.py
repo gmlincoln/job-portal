@@ -92,3 +92,13 @@ class Education_Model(models.Model):
 
     def __str__(self):
         return f"{self.user.username}--{self.institute_name}--{self.start_date}-{self.end_date}"
+
+class Experience(models.Model):
+    user = models.ForeignKey(Custom_User, null=True, on_delete=models.CASCADE)
+    job_title = models.CharField(max_length=100, null=True)
+    company_name = models.CharField(max_length=100, null=True)
+    start_date = models.DateField(max_length=100, null=True)
+    end_date = models.DateField(max_length=100, null=True)
+
+    def __str__(self):
+        return f"{self.user.username}--{self.job_title}--{self.company_name}"  

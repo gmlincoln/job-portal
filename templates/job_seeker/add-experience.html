@@ -1,0 +1,47 @@
+{% extends 'common/base.html' %}
+
+
+{% block title %}
+<title>Add Experience</title>
+{% endblock title %}
+
+
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Add Your Work Experience</h2>
+
+    <form method="POST" class="card p-4 shadow-lg">
+        {% csrf_token %}
+
+        <!-- Job Title -->
+        <div class="form-group mb-3">
+            <label for="job_title">Job Title</label>
+            <input type="text" class="form-control" id="job_title" name="job_title" placeholder="Enter your job title"
+                required>
+        </div>
+
+        <!-- Company Name -->
+        <div class="form-group mb-3">
+            <label for="company_name">Company Name</label>
+            <input type="text" class="form-control" id="company_name" name="company_name"
+                placeholder="Enter company name" required>
+        </div>
+
+        <!-- Start Date -->
+        <div class="form-group mb-3">
+            <label for="start_date">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date" required>
+        </div>
+
+        <!-- End Date -->
+        <div class="form-group mb-3">
+            <label for="end_date">End Date</label>
+            <input type="date" class="form-control" id="end_date" name="end_date" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Save Experience</button>
+    </form>
+</div>
+{% endblock body %}

@@ -7,11 +7,9 @@ from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
 
 
-
 from django.db import IntegrityError
 
 from myApp.models import *
-
 
 
 from django.contrib.auth import authenticate, login, logout
@@ -21,6 +19,9 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import update_session_auth_hash
+
+import requests
+import json
 
 
 def homePage(req):
@@ -62,6 +63,46 @@ def logoutPage(req):
     messages.success(req, 'Successfully logout!')
     return redirect('homePage')
 
+
+
+def forgetPassword(req):
+    if req.method == 'POST':
+        user_email = req.POST.get('email')
+
+        if Custom_User.objects.filter(email=user_email):
+            captcha_token = req.POST.get('g-recaptcha-response')
+            captcha_url = "https://www.google.com/recaptcha/api/siteverify"
+            captcha_secret = "6LeVN1sqAAAAAC6mx8Kx6qZt250gK83z4bkT_f-H"
+
+            captcha_data = {'secret':captcha_secret, 'response': captcha_token}
+            captcha_server_response = requests.post(url=captcha_url, data=captcha_data)
+
+            captcha_json = json.loads(captcha_server_response.text)
+
+            if captcha_json['success'] == False:
+                messages.error(req,'CAPTCHA validation failed. Please try again.')
+                return render(req, 'common/forget-password.html')
+            else:
+                return redirect('passwordToken')
+        
+        else:
+            messages.warning(req,'No user with this email exists.')
+            return render(req, 'common/forget-password.html')
+
+        
+    return render(req, 'common/forget-password.html')
+
+
+def passwordToken(req):
+
+    
+
+    return render(req, 'common/password-token.html')
+
+def passwordReset(req):
+    
+
+    return render(req, 'common/password-reset.html')
 
 def registerPage(req):
     
@@ -126,7 +167,7 @@ def createResume(req):
     
     current_user = req.user
 
-    resume = Resume_Model.objects.get(user=current_user)
+    resume = Resume_Model.objects.filter(user=current_user)
 
     if resume:
         messages.warning(req, 'Resume already exists!')
@@ -228,20 +269,21 @@ def previewResume(req):
 
     current_user = req.user
 
-    try:
-        user_basic_info = get_object_or_404(Resume_Model,user=current_user) 
-    
-    except Http404:
+    resume_exists = Resume_Model.objects.filter(user=current_user).exists()
+
+    if resume_exists:
+        user_basic_info = Resume_Model.objects.get(user=current_user)
+    else:
         messages.warning(req, "Sorry! You haven't created your resume yet")
         return redirect('createResume')
-
   
     education_info = Education_Model.objects.filter(user=current_user)
- 
+    experience_info = Experience.objects.filter(user=current_user)
 
     context = {
         'basic_info':user_basic_info,
-        'education_info': education_info
+        'education_info': education_info,
+        'experience_info':experience_info,
     }
     
     return render(req, 'job_seeker/preview-resume.html',context)
@@ -315,15 +357,104 @@ def addEducation(req):
     return render(req, 'job_seeker/add-education.html', context)
 
 @login_required
-def updateEducation(req):
+def updateEducation(req, edu_id):
+
+    if req.user.user_type == 'seeker':
+        edu_info = get_object_or_404(Education_Model, id = edu_id)
 
 
-    return render(req, 'job_seeker/update-education.html')
+        if req.method == 'POST':
+            
+
+            edu_info.id = req.POST.get('edu_id')
+            edu_info.degree_name = req.POST.get('degree_type')
+            edu_info.institute_name = req.POST.get('institution_text')
+            edu_info.field_of_study = req.POST.get('field_of_study_text')
+            edu_info.start_date = req.POST.get('start_date')
+            edu_info.end_date = req.POST.get('end_date')
+
+            edu_info.save()
+            return redirect('updateAll')
+
+    context = {
+        'education_info': edu_info,
+    }    
+
+
+    return render(req, 'job_seeker/update-education.html', context)
 
 @login_required
-def appliedJobs(req):
+def deleteEducation(req, edu_id):
 
-    return render(req, 'job_seeker/applied-jobs.html')
+    if req.user.user_type == 'seeker':
+        edu_info = Education_Model.objects.filter(id=edu_id)
+        edu_info.delete()
+        return redirect('updateAll')
+
+@login_required
+def addExperience(req):
+    current_user = req.user
+
+    if current_user.user_type == 'seeker':
+        if req.method == 'POST':
+            experience_instance = Experience.objects.create(user=current_user)
+            experience_instance.job_title = req.POST.get('job_title')
+            experience_instance.company_name = req.POST.get('company_name')
+            experience_instance.start_date = req.POST.get('start_date')
+            experience_instance.end_date = req.POST.get('end_date')
+
+            experience_instance.save()
+            return redirect('updateAll')
+    else:
+        messages.warning(req, 'You are not authorized to access this page.')
+        return redirect('homePage')
+    
+    return render(req, 'job_seeker/add-experience.html')
+
+def updateExperience(req,exp_id):
+
+
+    return HttpResponse('updateExperience')
+
+def deleteExperience(req,exp_id):
+    
+    return HttpResponse('deleteExperience')
+
+def addLanguage(req):
+
+    return HttpResponse('AddSkill')
+def updateLanguage(req):
+    
+
+    return HttpResponse('AddSkill')
+def deleteLanguage(req):
+
+    return HttpResponse('AddSkill')
+def addSkill(req):
+
+    return HttpResponse('AddSkill')
+def updateSkill(req):
+
+    return HttpResponse('AddSkill')
+def deleteSkill(req):
+
+    return HttpResponse('AddSkill')
+
+
+def updateAll(req):
+
+    current_user = req.user
+    education_info = Education_Model.objects.filter(user = current_user)
+    experience_info = Experience.objects.filter(user=current_user)
+
+    context = {
+        'education_info':education_info,
+        'experience_info':experience_info,
+    }
+
+    return render(req, 'job_seeker/update-all.html', context)
+
+
 
 @login_required
 def classicLayout(req):
@@ -353,8 +484,19 @@ def applyPage(req):
         messages.warning(req,"You are not a job seeker!")
         return redirect("jobDetails")
     
+@login_required
+def appliedJobs(req):
+
+    return render(req, 'job_seeker/applied-jobs.html')    
     
-    
+@login_required
+def viewApplicationDetails(req):
+
+    return render(req, 'job_seeker/view-application-details.html')
+@login_required
+def chatPage(req):
+
+    return render(req, 'common/chat.html')
 
 
 @login_required
@@ -362,7 +504,7 @@ def settingsPage(req):
 
     current_user = req.user
 
-    user_info = get_object_or_404(Resume_Model, user = current_user)
+    user_info = Resume_Model.objects.filter(user = current_user)
 
     context = {
         'user_info' : user_info
@@ -429,6 +571,10 @@ def changePassword(req):
 def dashboardPage(req):
 
     return render(req,'job_creator/index.html')
+
+
+
+
 
 #https://github.com/rajeshdiu/Job-Portal-Class-Practice/blob/main/myProject/myProject/views.py
 

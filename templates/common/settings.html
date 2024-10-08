@@ -6,8 +6,12 @@
 
     <!-- Profile Settings Card -->
     <div class="card shadow-sm mb-4">
+
         <div class="card-body">
             <h5 class="card-title text-center mb-4">Profile Settings</h5>
+
+            {% if user_info %}
+            {% for u in user_info %}
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="firstName" class="form-label">First Name</label>
@@ -22,8 +26,9 @@
                     <input type="email" class="form-control" id="email" value="{{ user.email }}" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
+
                     <label for="phone" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="phone" value="{{ user_info.contact_number }}" readonly>
+                    <input type="tel" class="form-control" id="phone" value="{{ u.contact_number }}" readonly>
                 </div>
             </div>
             <div class="text-center">
@@ -33,7 +38,17 @@
                     <i class="fas fa-save me-2"></i> Update Information
                 </a>
             </div>
+            {% endfor %}
+            {% else %}
+            <div class="alert alert-dark">
+                You've to create your resume first to see this portion!
+            </div>
+            {% endif %}
+
+
+
         </div>
+
     </div>
 
     <!-- Bootstrap Confirmation Modal -->

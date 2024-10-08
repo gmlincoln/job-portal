@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import *
+
+from myApp.models import Custom_User, DegreeType_Model, Education_Model, Experience, Field_of_Study_Model, Institute_Model, Resume_Model
+
 
 
 # Register your models here.
@@ -38,3 +40,8 @@ class Field_of_Study_Model_Display(admin.ModelAdmin):
 @admin.register(Education_Model)
 class Education_Model_Display(admin.ModelAdmin):
     list_display = ('user','institute_name','start_date', 'end_date')
+
+@admin.register(Experience)
+class Experience_Model_Display(admin.ModelAdmin):
+    list_display = ('user', 'job_title', 'company_name')
+    search_fields = ('user', 'job_title')

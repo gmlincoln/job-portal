@@ -56,7 +56,7 @@
 
                         {% if education_info %}
                         <div>
-                            <a href="{% url 'updateEducation' %}" class="btn btn-outline-primary btn-sm">Edit</a>
+                            <a href="{% url 'updateAll' %}" class="btn btn-outline-primary btn-sm">Edit</a>
                             <a href="{% url 'addEducation' %}" class="btn btn-outline-primary btn-sm">Add</a>
                         </div>
                         {% else %}
@@ -81,7 +81,7 @@
                         {% endfor %}
                         {% else %}
                         <div class="alert alert-dark">
-                            No educational institute added yet!
+                            No educational information available.
                         </div>
                         {% endif %}
 
@@ -94,12 +94,35 @@
                 <div class="mb-4">
                     <h4 class="d-flex justify-content-between align-items-center">
                         Experience
-                        <a href="/editExperience" class="btn btn-outline-primary btn-sm">Edit</a>
+
+                        {% if experience_info %}
+                        <div>
+                            <a href="{% url 'updateAll' %}" class="btn btn-outline-primary btn-sm">Edit</a>
+                            <a href="{% url 'addExperience' %}" class="btn btn-outline-primary btn-sm">Add</a>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'addExperience' %}" class="btn btn-outline-primary btn-sm">Add</a>
+                        {% endif %}
+
                     </h4>
+
+                    {% if experience_info %}
+
+                    {% for exp in experience_info %}
                     <ul>
-                        <li>Software Engineer at ABC Corp (2020 - Present)</li>
-                        <li>Intern at Tech Solutions (2019 - 2020)</li>
+                        <li>{{exp.job_title}} at {{exp.company_name}} ({{exp.start_date|date:'Y'}} -
+                            {{exp.end_date|date:'Y'}})</li>
+                        <!-- <li>Software Engineer at ABC Corp (2020 - Present)</li>
+                        <li>Intern at Tech Solutions (2019 - 2020)</li> -->
                     </ul>
+                    {% endfor %}
+                    {% else %}
+                    <div class="alert alert-dark">
+                        No experience information available.
+                    </div>
+
+                    {% endif %}
+
                 </div>
 
                 <!-- Language Section -->

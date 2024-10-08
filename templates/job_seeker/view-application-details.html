@@ -1,0 +1,73 @@
+{% extends 'common/base.html' %}
+
+{% block title %}
+<title>Application Details</title>
+{% endblock title %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Application Details</h2>
+    <div class="card shadow-lg p-4 m-4">
+
+        <!-- Job Information -->
+        <div class="mb-4">
+            <h4 class="mb-3">Job Information</h4>
+            <p><i class="fas fa-briefcase text-primary"></i> <strong>Job Title:</strong> <span class="text-muted">Data
+                    Analyst</span></p>
+            <p><i class="fas fa-building text-primary"></i> <strong>Company:</strong> <span class="text-muted">Finance
+                    Company</span></p>
+            <p><i class="fas fa-file-alt text-primary"></i> <strong>Description:</strong> <span
+                    class="text-muted">Analyze financial data to guide business decision-making processes.</span></p>
+            <p><i class="fas fa-tools text-primary"></i> <strong>Required Skills:</strong> <span class="text-muted">Data
+                    analysis, SQL, Python, Excel</span></p>
+            <p><i class="fas fa-dollar-sign text-primary"></i> <strong>Salary:</strong> <span
+                    class="text-muted">$60,000/year</span></p>
+        </div>
+
+        <!-- Application Details -->
+        <div class="mb-4">
+            <h4 class="mb-3">Application Details</h4>
+            <p><i class="fas fa-calendar-day text-primary"></i> <strong>Application Date:</strong> <span
+                    class="text-muted">2024-09-10</span></p>
+            <p><i class="fas fa-tasks text-primary"></i> <strong>Status:</strong>
+                <span class="badge badge-success">Interview Scheduled</span>
+            </p>
+            <p><i class="fas fa-level-up-alt text-primary"></i> <strong>Stage:</strong> <span
+                    class="text-muted">Interview</span></p>
+        </div>
+
+        <!-- Interview Details -->
+        <div class="mb-4">
+            <h4 class="mb-3">Interview Details</h4>
+            <p><i class="fas fa-calendar-alt text-primary"></i> <strong>Interview Date:</strong> <span
+                    class="text-muted">2024-09-20</span></p>
+            <p><i class="fas fa-clock text-primary"></i> <strong>Time:</strong> <span class="text-muted">10:00 AM</span>
+            </p>
+            <p><i class="fas fa-map-marker-alt text-primary"></i> <strong>Location/Link:</strong> <span
+                    class="text-muted">123 Main St, Finance Company Office</span></p>
+            <p><i class="fas fa-info-circle text-primary"></i> <strong>Instructions:</strong> <span
+                    class="text-muted">Please bring a copy of your resume and portfolio.</span></p>
+        </div>
+
+        <!-- Recruiter Response -->
+        <div class="mb-4">
+            <h4 class="mb-3 text-primary">Recruiter Response</h4>
+            <div class="mb-2">
+                <i class="fas fa-comments"></i> <strong>Message from Recruiter:</strong> <span
+                    class="text-muted">Looking forward to meeting you for the interview!</span>
+            </div>
+            <!-- Enhanced Smaller Reply Button -->
+            <a href="{% url 'chatPage' %}" class="btn btn-success btn-sm mt-2"
+                style="font-weight: bold; border-radius: 25px;">
+                <i class="fas fa-comment-dots"></i> Reply
+            </a>
+        </div>
+
+        <!-- Action Buttons -->
+        <hr>
+        <div class="d-flex justify-content-center mt-4">
+            <a href="#" class="btn btn-danger">Withdraw Application</a>
+        </div>
+    </div>
+</div>
+{% endblock body %}

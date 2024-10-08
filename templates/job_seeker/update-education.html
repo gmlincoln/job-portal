@@ -2,13 +2,77 @@
 
 
 {% block title %}
-
+<title>Update Education Qualification</title>
 {% endblock title %}
+
+
 
 
 {% block body %}
 
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Update Education Qualification</h2>
+
+    <form method="POST">
+        {% csrf_token %}
 
 
+        <!-- Specific ID -->
+        <div class="form-group">
+            <input type="text" class="form-control d-none" id="edu_id" name="edu_id" value="{{education_info.id}}"
+                required>
+        </div>
+
+
+        <!-- Degree Type -->
+        <div class="form-group">
+            <label for="degree">Degree Type</label>
+            <select class="form-control" id="degree" name="degree_type" required>
+                {% if education_info.degree_name == 'ssc' or education_info.degree_name == 'hsc' %}
+                <option value="{{education_info.degree_name}}" selected>{{education_info.degree_name|upper}}</option>
+                {% elif education_info.degree_name == 'bachelor' or education_info.degree_name == 'master' %}
+                <option value="{{education_info.degree_name}}" selected>{{education_info.degree_name|capfirst}}'s Degree
+                </option>
+                {% else %}
+                <option value="{{education_info.degree_name}}" selected>{{education_info.degree_name|capfirst}}</option>
+                {% endif %}
+            </select>
+        </div>
+
+        <!-- Institution Name -->
+        <div class="form-group">
+            <label for="institution">Institution Name</label>
+            <input type="text" class="form-control" id="institution_text" name="institution_text"
+                placeholder="Enter institution name" value="{{education_info.institute_name}}" required>
+        </div>
+
+        <!-- Field of Study -->
+        <div class="form-group">
+            <label for="field_of_study">Field of Study</label>
+            <input type="text" class="form-control" id="field_of_study_text" name="field_of_study_text"
+                placeholder="Enter your field of study" value="{{education_info.field_of_study}}" required>
+        </div>
+
+        <!-- Start Date -->
+        <div class="form-group">
+            <label for="start_date">Start Date</label>
+            <input type="date" class="form-control" id="start_date" name="start_date"
+                value="{{education_info.start_date|date:'Y-m-d'}}" required>
+        </div>
+
+        <!-- End Date -->
+        <div class="form-group">
+            <label for="end_date">End Date</label>
+            <input type="date" class="form-control" id="end_date" name="end_date"
+                value="{{education_info.end_date|date:'Y-m-d'}}" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mb-4">Update</button>
+
+
+
+    </form>
+</div>
 
 {% endblock body %}
